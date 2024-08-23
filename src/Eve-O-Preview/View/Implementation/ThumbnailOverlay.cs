@@ -1,46 +1,60 @@
 ﻿using System;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using EveOPreview.Services;
 
 namespace EveOPreview.View
 {
-	public partial class ThumbnailOverlay : Form
-	{
-		#region Private fields
-		private readonly Action<object, MouseEventArgs> _areaClickAction;
-		#endregion
+    public partial class ThumbnailOverlay : Form
+    {
+        #region Private fields
+        private readonly Action<object, MouseEventArgs> _areaClickAction;
+        #endregion
 
-		public ThumbnailOverlay(Form owner, Action<object, MouseEventArgs> areaClickAction)
-		{
-			this.Owner = owner;
-			this._areaClickAction = areaClickAction;
+        public ThumbnailOverlay(Form owner, Action<object, MouseEventArgs> areaClickAction)
+        {
+            this.Owner = owner;
+            this._areaClickAction = areaClickAction;
 
-			InitializeComponent();
-		}
+            InitializeComponent();
+        }
 
-		private void OverlayArea_Click(object sender, MouseEventArgs e)
-		{
-			this._areaClickAction(this, e);
-		}
+        private void OverlayArea_Click(object sender, MouseEventArgs e)
+        {
+            this._areaClickAction(this, e);
+        }
 
-		public void SetOverlayLabel(string label)
-		{
-			this.OverlayLabel.Text = label;
-		}
+        public void SetOverlayLabel(string label, bool enable = false)
+        {
+            if (enable)
+            {
+                this.OverlayLabel.Text = "ꗃ " + label;
+            }
+            else
+            {
+                this.OverlayLabel.Text = label;
+            }
+        }
 
-		public void EnableOverlayLabel(bool enable)
-		{
-			this.OverlayLabel.Visible = enable;
-		}
+        public void SetLockSizeAndPosThumbnail(string label, bool enable)
+        {
+            SetOverlayLabel(label, enable);
+        }
 
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				var Params = base.CreateParams;
-				Params.ExStyle |= (int)InteropConstants.WS_EX_TOOLWINDOW;
-				return Params;
-			}
-		}
-	}
+
+        public void EnableOverlayLabel(bool enable)
+        {
+            this.OverlayLabel.Visible = enable;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var Params = base.CreateParams;
+                Params.ExStyle |= (int)InteropConstants.WS_EX_TOOLWINDOW;
+                return Params;
+            }
+        }
+    }
 }

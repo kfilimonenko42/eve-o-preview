@@ -3,6 +3,8 @@ obj/
 publish/
 tools/
 src/.vs/
+src/Eve-O-Mock/.vs/
+src/Eve-O-Preview/.vs/
 *.suo
 *.user
 *.DotSettings
